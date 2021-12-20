@@ -1,6 +1,6 @@
-# Kivi testrun
+# Kivy testrun
 
-The aim of this repository is to learn how to make a cross-platform application using [Kivi](https://kivy.org/).<br/>To do so, we set ourselves 3 sub-objectives:
+The aim of this repository is to learn how to make a cross-platform application using [Kivy](https://kivy.org/).<br/>To do so, we set ourselves 3 sub-objectives:
 
 1. Follow the video by **FreeCodeCamp** - [Kivy Course - Create Python Games and Mobile Apps](https://www.youtube.com/watch?v=l8Imtec4ReQ)
 2. Create the projects of the video (_Lab_ and _Galaxy_)
@@ -14,7 +14,8 @@ Add info
 
 ### Lab
 
-Add info
+This is our first introduction to Kivy library. We create a simple project with a simple structure.<br/>
+The main objectives of this project is to get a good grasp of **Layouts**, **Widgets** and **Canvases**.
 
 ### Galaxy
 
