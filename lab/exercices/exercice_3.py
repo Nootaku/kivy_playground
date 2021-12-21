@@ -12,6 +12,9 @@ class WidgetsExample(GridLayout):
     is_counter_active = BooleanProperty(False)
     text = StringProperty(str(click_counter))
 
+    is_slider_active = BooleanProperty(False)
+    slider_text = StringProperty("50")
+
     def onCount(self):
         if self.is_counter_active:
             self.click_counter += 1
@@ -27,11 +30,20 @@ class WidgetsExample(GridLayout):
             widget.text = 'On'
             self.is_counter_active = True
 
+    def onSwitch(self, widget):
+        if widget.active:
+            self.is_slider_active = True
+        else:
+            self.is_slider_active = False
 
-class WidgetsTutorial(App):
+    def onSlider(self, widget):
+        self.slider_text = str(int(widget.value))
+
+
+class Exercice3(App):
     pass
 
 
 if __name__ == '__main__':
-    app = WidgetsTutorial()
+    app = Exercice3()
     app.run()

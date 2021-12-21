@@ -1,0 +1,36 @@
+#:kivy 2.0.0
+
+WidgetsExample:
+
+<WidgetsExample>:
+    cols: 3
+    ToggleButton:
+        text: 'Off'
+        on_state: root.onToggle(self)
+        font_name: "../fonts/Odachi.otf"
+        font_size: 45
+        size_hint_x: None
+        width: "100dp"
+    Button:
+        text: 'Click here'
+        on_press: root.onCount()
+        font_name: "../fonts/SoleilBook.otf"
+        disabled: not root.is_counter_active
+    Label:
+        text: root.text
+        font_name: "../fonts/SoleilBook.otf"
+        font_size: 21
+
+    Switch:
+        size_hint_x: None
+        width: "100dp"
+        font_name: "../fonts/Odachi.otf"
+        on_active: root.onSwitch(self)
+    Slider:
+        value: 50
+        on_value: root.onSlider(self)
+        disabled: not root.is_slider_active
+    Label:
+        text: root.slider_text
+        font_name: "../fonts/SoleilBook.otf"
+        font_size: 21

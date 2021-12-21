@@ -4,12 +4,12 @@ from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 
 # Properties
-from kivy.properties import BooleanProperty, StringProperty
+from kivy.properties import StringProperty
 
 
 class WidgetsExample(GridLayout):
     click_counter = 0
-    is_counter_active = BooleanProperty(False)
+    is_counter_active = False
     text = StringProperty(str(click_counter))
 
     def onCount(self):
@@ -28,10 +28,10 @@ class WidgetsExample(GridLayout):
             self.is_counter_active = True
 
 
-class WidgetsTutorial(App):
+class Exercice2(App):
     pass
 
 
 if __name__ == '__main__':
-    app = WidgetsTutorial()
+    app = Exercice2()
     app.run()
