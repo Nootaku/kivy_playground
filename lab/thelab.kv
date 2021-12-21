@@ -1,0 +1,71 @@
+#:kivy 2.0.0
+ScrollViewExample:
+
+<ScrollViewExample@ScrollView>:
+    StackLayoutExample:
+        size_hint_y: None
+        height: self.minimum_height
+
+# Stack Layout
+# ----------------------------------------------------------------
+<StackLayoutExample>:
+    # has been defined in the init of the main.py
+
+
+# Anchor Layout
+# ----------------------------------------------------------------
+<AnchorLayoutExample>:
+    # Positioning:
+    # anchor_x: right, left, center
+    # anchor_y: bottom, top, center
+    Button:
+        text: 'Hello'
+        size_hint: .1, .1
+
+
+# Box Layout
+# ----------------------------------------------------------------
+<BoxLayoutExample>:
+    # orientation: 'vertical'
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'A1'
+            # size:
+            # if size_hint is None, None ==> size
+            # else if size_hint is 1, None ==> height
+            # else if size_hint is None, 1 ==> width
+            size_hint: 1, None
+            height: '60dp'
+        Button:
+            text: 'A2'
+            size_hint: 0.5, 1
+            # position:
+            # x, center_x, right
+            # y, center_y, top
+            pos_hint: { 'center_x': .75}
+
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'B1'
+            spacing: '5dp'
+        Button:
+            text: 'B2'
+            spacing: '5dp'
+        Button:
+            text: 'B3'
+            spacing: '5dp'
+
+
+# Main Widget
+# ----------------------------------------------------------------
+<MainWidget>:
+    Button:
+        text: "Button"
+        size: "40dp", "40dp"
+    Label:
+        text: "Hello"
+        size: "40dp", "40dp"
+        pos: "50dp", "50dp"
+        color: 1, 0, 0, 1
