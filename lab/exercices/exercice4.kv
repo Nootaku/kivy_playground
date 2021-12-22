@@ -1,0 +1,9 @@
+#:kivy 2.0.0
+#:set foo dp(50)
+MoveObject:
+
+<MoveObject>:
+    Button:
+        text: 'Move'
+        pos: (foo, root.height - 3*foo)
+        on_press: root.onMoveButtonPress()

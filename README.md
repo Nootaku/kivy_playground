@@ -17,6 +17,8 @@ Add info
 This is our first introduction to Kivy library. We create a simple project with a simple structure.<br/>
 The main objectives of this project is to get a good grasp of **Layouts**, **Widgets** and **Canvases**.
 
+The **Navigation** - allowing multiple screens - is not covered in the free course but the API documentation of the class can be found in the documentation under the name [Screen Manager](https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html)
+
 ### Galaxy
 
 Add info
