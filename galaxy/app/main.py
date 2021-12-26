@@ -1,8 +1,13 @@
 from kivy.app import App
+from kivy.config import Config
 from kivy.graphics import Color
 from kivy.graphics import Line
-from kivy.properties import NumericProperty
+from kivy.properties import Clock, NumericProperty
 from kivy.uix.widget import Widget
+
+
+Config.set('graphics', 'width', '900')
+Config.set('graphics', 'height', '400')
 
 
 class MainWidget(Widget):
@@ -16,14 +21,27 @@ class MainWidget(Widget):
     vertical_lines = []
 
     # Horizontal Lines variables
-    NB_H_LINES = 8
+    NB_H_LINES = 13
     H_LINES_SPACING = .1  # percentage of the window height
     horizontal_lines = []
 
+    # Movement variables
+    fps = 1 / 60
+    movement_speed_y = 2.5
+    movement_speed_x = 10
+    current_offset_y = 0
+    current_offset_x = 0
+    current_movement_x = 0
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        # Create grid
         self.makeVerticalLines()
         self.makeHorizontalLines()
+
+        # Movement
+        Clock.schedule_interval(self.update, self.fps)
 
     def makeVerticalLines(self):
         """Generate vertical lines on the main interface.
@@ -58,7 +76,9 @@ class MainWidget(Widget):
         central_line_x = int(self.width / 2)
 
         for i in self.vertical_lines:
-            line_x = int(central_line_x + (offset * v_spacing))
+            line_x = int(
+                central_line_x + (offset * v_spacing) + self.current_offset_x
+            )
             x1, y1 = self.transformPerspective(
                 line_x, 0) if transform else (int(line_x), 0)
             x2, y2 = self.transformPerspective(
@@ -76,17 +96,19 @@ class MainWidget(Widget):
         but with an offset of 0.
         """
         # Get x_min and x_max
-        central_line_x = int(self.width / 2)  # 0.5
-        v_spacing = self.width * self.V_LINES_SPACING  # 0.2
-        offset = int(self.NB_V_LINES / 2) - 0.5  # 1.5
-        x_min = central_line_x + (offset * v_spacing)
-        x_max = central_line_x - (offset * v_spacing)
+        central_line_x = int(
+            (self.width / 2) + self.current_offset_x
+        )
+        v_spacing = self.width * self.V_LINES_SPACING
+        x_offset = int(self.NB_V_LINES / 2) - 0.5
+        x_min = central_line_x + (x_offset * v_spacing)
+        x_max = central_line_x - (x_offset * v_spacing)
 
         # Get y value
         h_spacing = self.height * self.H_LINES_SPACING
 
         for index, value in enumerate(self.horizontal_lines):
-            line_y = index * h_spacing
+            line_y = (index * h_spacing) - self.current_offset_y
             x1, y1 = self.transformPerspective(x_min, line_y, transform)
             x2, y2 = self.transformPerspective(x_max, line_y, transform)
             value.points = [x1, y1, x2, y2]
@@ -128,10 +150,32 @@ class MainWidget(Widget):
         else:
             return int(x), int(y)
 
-    def on_size(self, *args):
+    def on_touch_down(self, touch):
+        if touch.x < int(self.width / 2):
+            self.current_movement_x = self.movement_speed_x
+        else:
+            self.current_movement_x = -self.movement_speed_x
+
+    def on_touch_up(self, touch):
+        self.current_movement_x = 0
+
+    def update(self, dt):
+        """Create the illusion of movement by updating 60 times per second.
+        This means the 'on_size()' is no longer necessary as it will automatic-
+        ally update.
+        """
+        # Time factor: normally == to 1 if real 60 fps
+        time_factor = dt * 60
         self.updateVerticalLines()
         self.updateHorizontalLines()
+        self.current_offset_y += self.movement_speed_y * time_factor
+        self.current_offset_x += self.current_movement_x * time_factor
 
+        # Reset to original position if zcond horizontal line reaches the
+        # bottom of the screen.
+        h_spacing = self.height * self.H_LINES_SPACING
+        if self.current_offset_y >= h_spacing:
+            self.current_offset_y -= h_spacing
 
 # class VerticalLines():
 #     def __init__(self, **kwargs):

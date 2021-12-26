@@ -39,6 +39,16 @@ The simplest way to do this is to apply the perspective point to the generated l
 
 [This video](https://www.youtube.com/watch?v=l8Imtec4ReQ&t=10511s) explains it pretty well.
 
+### Display horizontal lines
+
+We use the same strategy as for the vertical lines but for the horizontal lines. Then we improve the effect of perspective by decreasing the space between horizontal lines the closer they get to the perspective point.
+
+## Step 2 - Movement
+
+The impression of movement will be given by moving the vertical lines down. Once the Second vertical line reaches the bottom of the screen we will reset the lines to their original position and loop the animation.
+
+To do this we can use the `Clock.schedule(f, dt)` function where `dt` is the time interval between 2 loops. The speed of the loop can be defined by the `y_offset` of the update function (the bigger, the faster).
+
 ## Kivy internal methods
 
 ### on_parent()
@@ -48,3 +58,11 @@ The `on_parent(self, widget, parent)` method is called when the widget is being 
 ### on_size()
 
 The `on_size(self, *args)` method is called whenever the window is being resized. This includes the resize that takes place right after the initialization of the main interface.
+
+### on_touch_down()
+
+When the screen is being touched (or if the mouse clicks on the window), the `on_touch_down(self, touch)` is being called. The position of the touch can be determined by using `touch.x` and `touch.y`.
+
+### on_touch_up()
+
+When the screen press is being released, the `on_touch_up(self, touch)` is being called.
