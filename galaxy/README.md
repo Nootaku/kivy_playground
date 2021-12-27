@@ -49,6 +49,10 @@ The impression of movement will be given by moving the vertical lines down. Once
 
 To do this we can use the `Clock.schedule(f, dt)` function where `dt` is the time interval between 2 loops. The speed of the loop can be defined by the `y_offset` of the update function (the bigger, the faster).
 
+## Step 3 - User input for horizontal movement
+
+foo
+
 ## Kivy internal methods
 
 ### on_parent()
