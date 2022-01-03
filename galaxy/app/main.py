@@ -28,8 +28,16 @@ class MainWidget(Widget):
     from layout import (
         makeVerticalLines,
         makeHorizontalLines,
+        getLineXFromIndex,
+        getLineYFromIndex,
         updateVerticalLines,
         updateHorizontalLines
+    )
+    from tiles import (
+        makeTiles,
+        createTileCoordinates,
+        getTileCoordinates,
+        updateTiles
     )
     from transform import transformPerspective
     from user_actions import (
@@ -62,6 +70,14 @@ class MainWidget(Widget):
     current_offset_y = 0
     current_offset_x = 0
     current_movement_x = 0
+    current_loop_y = 0
+
+    # Tile management
+    NB_TILES = 15
+    tiles = []
+    tiles_coordinates = []
+    tile_index_x = 0
+    tile_index_y = 4
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -71,6 +87,10 @@ class MainWidget(Widget):
         # Create grid
         self.makeVerticalLines()
         self.makeHorizontalLines()
+
+        # Create tiles
+        self.makeTiles()
+        self.createTileCoordinates()
 
         # Keyboard input
         if self.isDesktop:
@@ -87,6 +107,10 @@ class MainWidget(Widget):
             return True
         return False
 
+    @property
+    def centerX(self):
+        return int(self.width / 2)
+
     def update(self, dt):
         """Create the illusion of movement by updating 60 times per second.
         This means the 'on_size()' is no longer necessary as it will automatic-
@@ -96,6 +120,7 @@ class MainWidget(Widget):
         time_factor = dt * 60
         self.updateVerticalLines(self.use_perspective)
         self.updateHorizontalLines(self.use_perspective)
+        self.updateTiles(self.use_perspective)
         self.current_offset_y += self.movement_speed_y * time_factor
         self.current_offset_x += self.current_movement_x * time_factor
 
@@ -104,6 +129,9 @@ class MainWidget(Widget):
         h_spacing = self.height * self.H_LINES_SPACING
         if self.current_offset_y >= h_spacing:
             self.current_offset_y -= h_spacing
+            self.current_loop_y += 1
+            # update the tile coordinates based on the current_loop_y
+            self.createTileCoordinates()
 
 
 class GalaxyApp(App):

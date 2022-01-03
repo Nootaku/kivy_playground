@@ -53,6 +53,47 @@ To do this we can use the `Clock.schedule(f, dt)` function where `dt` is the tim
 
 foo
 
+## Step 4 - Tiles generation
+
+In order to create tiles (or the road on which the spaceship will have to "drive"), we need to know "where" the tile should be generated. To do so we will use a **coordinate** system on a X - Y axes where Y = 0 at the very bottom of the screen and where X = 0 at the x coordinate of the perspective point.
+
+This will make it possible to say: "create a tile at 3, 2"
+
+In order to implement this system, we will consider that the bottom left corner of the tile is the coordinates.
+
+And since we implemented our grid where the vertical lines are at `x - (0.5 * line_spacing)`, our coordinate `0, 0` will actually be at `-0.5, 0`.
+
+### Displaying tiles
+
+The first idea that popped in my mind when trying to generate a tile was to use a `Rectangle` and to transform it (like we did with the layout). However, the perspective transformation does not work on a `Rectangle`. This is why we will use a `Quad`.
+
+The difference is that a `Quad` requires 4 points to be generated. And we can easily get those 4 points thanks to our `getLineXFromIndex()` and `getLineYFromIndex()` methods.
+
+### Movement of the tiles
+
+Since we use a looping mechanism to create the illusion of movement, tiles will "_jump_" back to their original position after each loop.
+
+To prevent this we use a `loop_counter` and the Y coordinates of the tile will be the difference between the original Y and the current loop counter.
+
+### Displaying multiple tiles
+
+This part simply uses the generation of lists.
+
+The first part is easy, we just use the same principle as for the line generation but we apply it to the tiles (loop through the number of tiles we want to generate).
+
+The second part is a bit trickier: we want to be generating tiles infinitely.<br/>
+To do this we need to adapt our `createTileCoordinates()` method.
+
+### Generating turns
+
+To make turns we are going to create 3 sample tiles (straight, left, right). All of those samples have one tile in common: `x, last_y_value + 1`.
+
+Then we are going to take a random integer between 0 and 2 (included) where 0 is straight, 1 is left and 2 is right. Generating the sample shape described above. This forces us to also include a `last_x_value` variable.
+
+#### Clean invisible tiles
+
+The condition to be cleaned is that the `tile_index_y` is smaller than the `current_loop_y`.
+
 ## Kivy internal methods
 
 ### on_parent()

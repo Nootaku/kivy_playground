@@ -24,6 +24,30 @@ def makeHorizontalLines(self):
             )
 
 
+def getLineXFromIndex(self, index):
+    """Return the X value (value of the horizontal axis) of a vertical line on
+    the grid based on the line index.
+    """
+    central_x = self.x_pp
+    spacing = self.V_LINES_SPACING * self.width
+    offset = index - 0.5
+
+    line_x = central_x + (offset * spacing) + self.current_offset_x
+
+    return line_x
+
+
+def getLineYFromIndex(self, index):
+    """Return the Y value (value of the vertical axis) of a horizontal line on
+    the grid based on the line index.
+    """
+    spacing = self.H_LINES_SPACING * self.height
+    y_value = index * spacing
+    line_y = y_value - self.current_offset_y
+
+    return line_y
+
+
 def updateVerticalLines(self, transform=True):
     """Update the position of the vertical lines depending on the size of
     the main inteface.
@@ -32,22 +56,18 @@ def updateVerticalLines(self, transform=True):
     to the negative value of half of the NB_V_LINES multiplied by the
     spacing.
     """
-    offset = -int(self.NB_V_LINES / 2) + 0.5
-    v_spacing = self.width * self.V_LINES_SPACING
-    central_line_x = int(self.width / 2)
+    start_line = 1 - int(self.NB_V_LINES / 2)
+    end_line = start_line + self.NB_V_LINES
 
-    for i in self.vertical_lines:
-        line_x = int(
-            central_line_x + (offset * v_spacing) + self.current_offset_x
-        )
+    for i in range(start_line, end_line):
+        line_x = self.getLineXFromIndex(i)
         x1, y1 = self.transformPerspective(
             line_x, 0) if transform else (int(line_x), 0)
         x2, y2 = self.transformPerspective(
             line_x, self.height) if transform else (
                 int(line_x), int(self.height)
             )
-        i.points = [x1, y1, x2, y2]
-        offset += 1
+        self.vertical_lines[i].points = [x1, y1, x2, y2]
 
 
 def updateHorizontalLines(self, transform=True):
@@ -58,19 +78,14 @@ def updateHorizontalLines(self, transform=True):
     but with an offset of 0.
     """
     # Get x_min and x_max
-    central_line_x = int(
-        (self.width / 2) + self.current_offset_x
-    )
-    v_spacing = self.width * self.V_LINES_SPACING
-    x_offset = int(self.NB_V_LINES / 2) - 0.5
-    x_min = central_line_x + (x_offset * v_spacing)
-    x_max = central_line_x - (x_offset * v_spacing)
+    start_index = 1 - int(self.NB_V_LINES / 2)
+    end_index = start_index + self.NB_V_LINES - 1
 
-    # Get y value
-    h_spacing = self.height * self.H_LINES_SPACING
+    x_min = self.getLineXFromIndex(start_index)
+    x_max = self.getLineXFromIndex(end_index)
 
     for index, value in enumerate(self.horizontal_lines):
-        line_y = (index * h_spacing) - self.current_offset_y
+        line_y = self.getLineYFromIndex(index)
         x1, y1 = self.transformPerspective(x_min, line_y, transform)
         x2, y2 = self.transformPerspective(x_max, line_y, transform)
         value.points = [x1, y1, x2, y2]
