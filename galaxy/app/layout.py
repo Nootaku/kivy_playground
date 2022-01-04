@@ -9,7 +9,7 @@ def makeVerticalLines(self):
         Color(1, 1, 1)
         for i in range(0, self.NB_V_LINES):
             self.vertical_lines.append(
-                Line(width=1.5)
+                Line(width=1.25)
             )
 
 
@@ -20,7 +20,7 @@ def makeHorizontalLines(self):
         Color(1, 1, 1)
         for i in range(0, self.NB_H_LINES):
             self.horizontal_lines.append(
-                Line(width=1.5)
+                Line(width=1.25)
             )
 
 

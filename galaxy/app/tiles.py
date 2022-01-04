@@ -12,6 +12,16 @@ def makeTiles(self):
             self.tiles.append(Quad())
 
 
+def createFirstTenTiles(self):
+    """Identical function to createTileCoordinates, but called only once at
+    the start of the game.
+    """
+    for i in range(10):
+        self.tiles_coordinates.append(
+            (0, i)
+        )
+
+
 def createTileCoordinates(self):
     """For each generated tile, create the initial coordinate values of the
     tile.
@@ -48,6 +58,11 @@ def createTileCoordinates(self):
     # We should not start from null every time, but we should keep existing
     for i in range(len(self.tiles_coordinates), self.NB_TILES):
         rand = random.randint(0, 2)
+
+        if last_x_value <= min_x:
+            rand = 2
+        if last_x_value >= max_x - 1:
+            rand = 1
 
         # Common to all 3 shapes
         self.tiles_coordinates.append(

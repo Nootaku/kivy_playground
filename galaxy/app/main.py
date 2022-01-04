@@ -16,8 +16,8 @@ from kivy.config import Config
 from kivy.app import App
 from kivy import platform
 
-Config.set('graphics', 'width', '900')
-Config.set('graphics', 'height', '400')
+Config.set('graphics', 'width', '1200')
+Config.set('graphics', 'height', '800')
 
 
 class MainWidget(Widget):
@@ -35,9 +35,15 @@ class MainWidget(Widget):
     )
     from tiles import (
         makeTiles,
+        createFirstTenTiles,
         createTileCoordinates,
         getTileCoordinates,
         updateTiles
+    )
+    from ship import (
+        makeShip,
+        updateShip,
+        updateShipGif
     )
     from transform import transformPerspective
     from user_actions import (
@@ -65,8 +71,8 @@ class MainWidget(Widget):
 
     # Movement variables
     fps = 1 / 60
-    movement_speed_y = 2.5
-    movement_speed_x = 10
+    movement_speed_y = 1
+    movement_speed_x = 5
     current_offset_y = 0
     current_offset_x = 0
     current_movement_x = 0
@@ -79,10 +85,17 @@ class MainWidget(Widget):
     tile_index_x = 0
     tile_index_y = 4
 
+    # Spaceship management
+    SHIP_WIDTH = 0.1
+    SHIP_HEIGHT = 0.035
+    SHIP_BASE = 0.04
+    ship = None
+    ship_coordinates = [(0, 0), (0, 0), (0, 0)]
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # Set window size
-        Window.size = (900, 400)
+        Window.size = (1200, 650)
 
         # Create grid
         self.makeVerticalLines()
@@ -90,7 +103,11 @@ class MainWidget(Widget):
 
         # Create tiles
         self.makeTiles()
+        self.createFirstTenTiles()
         self.createTileCoordinates()
+
+        # Create ship
+        self.makeShip()
 
         # Keyboard input
         if self.isDesktop:
@@ -118,10 +135,16 @@ class MainWidget(Widget):
         """
         # Time factor: normally == to 1 if real 60 fps
         time_factor = dt * 60
+
+        # Relative movement speed
+        y_speed_unit = (self.height * self.H_LINES_SPACING) / 60
+        y_movement_speed = y_speed_unit * self.movement_speed_y
         self.updateVerticalLines(self.use_perspective)
         self.updateHorizontalLines(self.use_perspective)
         self.updateTiles(self.use_perspective)
-        self.current_offset_y += self.movement_speed_y * time_factor
+        self.updateShip(self.use_perspective)
+        # self.updateShipGif()
+        self.current_offset_y += y_movement_speed * time_factor
         self.current_offset_x += self.current_movement_x * time_factor
 
         # Reset to original position if zcond horizontal line reaches the

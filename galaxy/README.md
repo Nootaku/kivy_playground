@@ -94,6 +94,12 @@ Then we are going to take a random integer between 0 and 2 (included) where 0 is
 
 The condition to be cleaned is that the `tile_index_y` is smaller than the `current_loop_y`.
 
+## Step 5 - The ship
+
+Creating the ship is simple: a `Triangle` that is being updated to screen height and width.
+
+### Detection of collisions
+
 ## Kivy internal methods
 
 ### on_parent()

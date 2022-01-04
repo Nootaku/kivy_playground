@@ -2,10 +2,13 @@ def on_touch_down(self, touch):
     """Method called when the screen is being touched (smartphone / tablet)
     or when it is being cliked.
     """
+    x_speed_unit = (self.width * self.V_LINES_SPACING) / 60
+    x_movement_speed = x_speed_unit * self.movement_speed_x
+
     if touch.x < int(self.width / 2):
-        self.current_movement_x = self.movement_speed_x
+        self.current_movement_x = x_movement_speed
     else:
-        self.current_movement_x = -self.movement_speed_x
+        self.current_movement_x = -x_movement_speed
 
 
 def on_touch_up(self, touch):
@@ -21,10 +24,15 @@ def closeKeyboard(self):
 
 
 def onKeyDown(self, keyboard, keycode, text, modifiers):
+    """Method called when the keyboard is pressed.
+    """
+    x_speed_unit = (self.width * self.V_LINES_SPACING) / 60
+    x_movement_speed = x_speed_unit * self.movement_speed_x
+
     if keycode[1] == 'left':
-        self.current_movement_x = self.movement_speed_x
+        self.current_movement_x = x_movement_speed
     elif keycode[1] == 'right':
-        self.current_movement_x = -self.movement_speed_x
+        self.current_movement_x = -x_movement_speed
 
     return True  # instruction that validates the keypress management
 
