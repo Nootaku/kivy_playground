@@ -1,3 +1,6 @@
+from kivy.uix.relativelayout import RelativeLayout
+
+
 def on_touch_down(self, touch):
     """Method called when the screen is being touched (smartphone / tablet)
     or when it is being cliked.
@@ -5,10 +8,13 @@ def on_touch_down(self, touch):
     x_speed_unit = (self.width * self.V_LINES_SPACING) / 60
     x_movement_speed = x_speed_unit * self.movement_speed_x
 
-    if touch.x < int(self.width / 2):
-        self.current_movement_x = x_movement_speed
-    else:
-        self.current_movement_x = -x_movement_speed
+    if self.is_game_started and not self.is_game_over:
+        if touch.x < int(self.width / 2):
+            self.current_movement_x = x_movement_speed
+        else:
+            self.current_movement_x = -x_movement_speed
+
+    return super(RelativeLayout, self).on_touch_down(touch)
 
 
 def on_touch_up(self, touch):

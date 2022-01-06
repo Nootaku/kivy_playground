@@ -1,5 +1,27 @@
+#:import menu menu
+
 MainWidget:
 
 <MainWidget>:
+    # Background image
+    canvas.before:
+        Rectangle:
+            size: self.size
+            source: 'img/bg_2.jpg'
+
+    # Main variables
+    menu_widget: menu_widget
     x_pp: self.width / 2
     y_pp: self.height * 0.8
+
+    # Menu
+    MenuWidget:
+        id: menu_widget
+
+    # Score
+    Label:
+        text: root.score_text
+        font_size: dp(30)
+        font_name: 'fonts/mandalore.ttf'
+        size_hint: .15, .15
+        pos_hint: {'right': 1, 'top': 1}

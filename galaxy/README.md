@@ -100,20 +100,81 @@ Creating the ship is simple: a `Triangle` that is being updated to screen height
 
 ### Detection of collisions
 
-## Kivy internal methods
+The detection of collisions allows us to know if the ship "collides" with tiles. This detection uses the coordinates of the points of the ship and the `x_min`, `y_min`, `x_max`, `y_max` values of the tile.
 
-### on_parent()
+If the x-coordinate of a point is between `x_min` and `x_max` and the y-coordinate between `y_min` and `y_max`, then it means the point is on the tile.<br/>
+This corresponds to a collision.
+
+Finally, we don't need to verify the collision with every tile but only with the 2 lowest rows as the ship does not move.
+
+### Game Over
+
+Now the collision allows us to know if the ship is on a tile. And tiles are the _path_ that the ship should follow. Which means that while the ship is colliding with tiles everything is ok, but as soon as the collision is `False`, the game should stop.
+
+This is why we add a `is_game_over` parameter that is `False` by default and becomes `True` when no collision is detected.
+
+Now that we have a state, we can modify our `update()` method to freeze when the state `is_game_over`.
+
+## Step 6 - Adding the Menu
+
+The menu is being handled by a different `.py` and `.kv` file.
+
+Once the menu is created (as an independent widget), it can be included inside the `MainWidget` in the `galaxy.kv` file. To do so, we need to import it with `#:import menu menu`
+
+```
+#:import menu menu
+
+MainWidget:
+
+<MainWidget>:
+    x_pp: self.width / 2
+    y_pp: self.height * 0.8
+    MenuWidget:
+```
+
+This on its own will not change anything. The menu will not appear.
+
+To be able to display the menu, we need to use the kivy `Builder` in our `main.py`.
+
+### Preventing game start: the 'Start' button
+
+We are using the same method as the game over. We will create a `is_game_started` parameter that is false by default in our `main.py`. Only when `is_game_started == True` will the looping begin.
+
+The parameter can be controlled by the `start` button in the menu. However, the `on_press` will not access the `root` (as it refers to the `<MenuWidget>`) but to the `root.parent` which corresponds to the Main widget.
+
+But this is not enough.
+
+The `on_touch_down()` method overwrites the clicking of a button. To ensure the good functioning of the button we need to make sure that the `on_touch_down()` method returns `super(MainWidget, self).on_touch_down(touch)`.
+
+This is a very specific case. But we are not done yet:<br/>
+`MainWidget` imports `user_actions.py` but in this case `user_actions.py` will need to import `MainWidget` creating a circular import.
+
+To solve this, we will not import `MainWidget`, but its parent: `RelativeLayout`.
+
+Finally, we need to know that if the opacity of the menu is 0, it does not mean that the menu is inactive. Which is why we need to disable the button when the `opacity == 0`.
+
+### Restarting the game
+
+Restarting the game is a little trickier than just saying that `is_game_over == False` and `is_game_started == True`.
+
+The game uses multiple parameters (like `current_loop_y`, `current_offset_x`, etc) to determine the position. Moreover, the tiles have already been generated for the _n_ next iterations to come.
+
+This is why we need to reset everything to zero and to empty the tiles and 're-generate' our first ten straight tiles.
+
+# Kivy internal methods
+
+## on_parent()
 
 The `on_parent(self, widget, parent)` method is called when the widget is being attached to the parent element.
 
-### on_size()
+## on_size()
 
 The `on_size(self, *args)` method is called whenever the window is being resized. This includes the resize that takes place right after the initialization of the main interface.
 
-### on_touch_down()
+## on_touch_down()
 
 When the screen is being touched (or if the mouse clicks on the window), the `on_touch_down(self, touch)` is being called. The position of the touch can be determined by using `touch.x` and `touch.y`.
 
-### on_touch_up()
+## on_touch_up()
 
 When the screen press is being released, the `on_touch_up(self, touch)` is being called.

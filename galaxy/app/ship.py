@@ -50,26 +50,33 @@ def updateShip(self, transform=True):
 
 
 def checkCollision(self):
+    """Return True if the ship is on the track and return False if the ship
+    is of the track.
     """
-    """
-    pass
+    for i in self.tiles_coordinates:
+        tile_index_x, tile_index_y = i
+
+        # We don't check the tiles that are not on the 2 first rows
+        if tile_index_y > self.current_loop_y + 1:
+            return False
+        if self.checkShipCollisionWithTile(tile_index_x, tile_index_y):
+            return True
+    return False
 
 
 def checkShipCollisionWithTile(self, tile_index_x, tile_index_y):
-    """
+    """Check that the ship collides with a given tile.
+    A collision is if at least 2 points of the triangle are inside the tile.
+    The ship should collide with the road (aka tiles) as this is the aim of the
+    game.
     """
     x_min, y_min = self.getTileCoordinates(tile_index_x, tile_index_y)
     x_max, y_max = self.getTileCoordinates(tile_index_x + 1, tile_index_y + 1)
-
-    points_inside = 0
 
     for i in self.ship_coordinates:
         point_x, point_y = i
 
         if x_min <= point_x <= x_max and y_min <= point_y <= y_max:
-            points_inside += 1
-
-        if points_inside > 1:
             return True
 
     return False
