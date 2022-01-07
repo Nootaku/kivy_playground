@@ -1,25 +1,92 @@
-Player:
-
-<Player>:
-    source: 'resources/videos/01_fakie_gazelle.webm'
-    state: 'play'
-    allow_strech: True
+MainWindow:
 
 <MainWindow>:
-    orientation: 'vertical'
+    MenuWindow:
+    WizardWindow:
+    SlideWindow:
+
+<MenuWindow>:
+    name: 'menu'
     BoxLayout:
-        size_hint_y: None
-        height: '65dp'
+        orientation: 'vertical'
         Label:
             text: 'Logo'
         Button:
-            text: 'Menu'
-    VideoSelection:
-    Label:
-        text: 'copyright - 2022, Maxime Wattez'
+            text: 'Wizard'
+            on_release: app.root.current = 'wizard'
+        Button:
+            text: 'Slides'
+            on_release: app.root.current = 'slide'
 
-    VideoPlayer:
-        source: root.video_path
+<WizardWindow>:
+    name: 'wizard'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        StackLayout:
+            id: wizard_menu
+            size_hint_y: None
+            size_y: dp(45)
+            Button:
+                text: 'Back'
+                size_hint_x: None
+                size_x: dp(45)
+                on_release: app.root.current = 'menu'
+            Button:
+                text: 'Fakie Gazelle'
+                size_hint_x: None
+                size_x: root.button_width
+                on_release: root.launchVideo(0, wizard_player, wizard_menu)
+            Button:
+                text: 'Front Gazelle'
+                size_hint_x: None
+                size_x: root.button_width
+                on_release: root.launchVideo(1, wizard_player, wizard_menu)
+            Button:
+                text: 'Lion in-out'
+                size_hint_x: None
+                size_x: root.button_width
+                on_release: root.launchVideo(2, wizard_player, wizard_menu)
+            Button:
+                text: 'Lion out-in'
+                size_hint_x: None
+                size_x: root.button_width
+                on_release: root.launchVideo(3, wizard_player, wizard_menu)
+
+        BoxLayout:
+            id: wizard_player_box
+            orientation: 'vertical'
+            Button:
+                size_hint: None, None
+                size: dp(45), dp(45)
+                text: 'X'
+                opacity: .75
+                on_press: root.stopVideo(wizard_player, wizard_menu)
+            VideoPlayer:
+                id: wizard_player
+                source: root.video_path
 
 
-<VideoSelection>:
+
+<SlideWindow>:
+    name: 'slide'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint_y: None
+            size_y: dp(45)
+            Button:
+                text: 'Back'
+                on_release: app.root.current = 'menu'
+            Button:
+                text: 'Powerslide'
+                on_release:
+            Button:
+                text: 'Parallel slide'
+                on_release:
+
+        VideoPlayer:
+            source: root.video_path
