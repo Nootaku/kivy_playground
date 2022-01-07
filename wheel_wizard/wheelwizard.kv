@@ -1,4 +1,9 @@
-MainWindow:
+Player:
+
+<Player>:
+    source: 'resources/videos/01_fakie_gazelle.webm'
+    state: 'play'
+    allow_strech: True
 
 <MainWindow>:
     orientation: 'vertical'
@@ -12,6 +17,9 @@ MainWindow:
     VideoSelection:
     Label:
         text: 'copyright - 2022, Maxime Wattez'
+
+    VideoPlayer:
+        source: root.video_path
 
 
 <VideoSelection>:

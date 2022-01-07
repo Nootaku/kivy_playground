@@ -120,7 +120,7 @@ class MainWidget(RelativeLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # Set window size
-        Window.size = (1200, 650)
+        Window.fullscreen = True
 
         # Initialize Audio
         self.loadAudio()
@@ -139,6 +139,8 @@ class MainWidget(RelativeLayout):
 
         # Keyboard input
         if self.isDesktop:
+            Window.fullscreen = False
+            Window.size = (1200, 650)
             self._keyboard = Window.request_keyboard(self.closeKeyboard, self)
             self._keyboard.bind(on_key_down=self.onKeyDown)
             self._keyboard.bind(on_key_up=self.onKeyRelease)
