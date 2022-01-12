@@ -1,73 +1,122 @@
+#:import player player
+
 MainWindow:
 
 <MainWindow>:
     MenuWindow:
     WizardWindow:
     SlideWindow:
+    PlayerWidget:
 
 <MenuWindow>:
     name: 'menu'
     BoxLayout:
         orientation: 'vertical'
-        Label:
-            text: 'Logo'
-        Button:
-            text: 'Wizard'
-            on_release: app.root.current = 'wizard'
-        Button:
-            text: 'Slides'
-            on_release: app.root.current = 'slide'
+        spacing: 25
+        padding: 10
+        canvas.before:
+            Color:
+                rgba: .28, .28, .28, 1
+            Rectangle:
+                size: self.size
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(90)
+            Image:
+                source: 'resources/img/icon.png'
+                size_hint_x: .33333333333
+                # allow_stretch: True
+            Label:
+                text: 'Wheel Wizard'
+                font_name: 'resources/fonts/Odachi.otf'
+                font_size: dp(60)
+                color: 0.6, 0.87, 0
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 8
+            Button:
+                text: 'Wizard'
+                size_hint_y: None
+                height: dp(55)
+                on_release: app.root.current = 'wizard'
+            Button:
+                text: 'Slides'
+                size_hint_y: None
+                height: dp(55)
+                on_release: app.root.current = 'slide'
+            Button:
+                text: 'Street'
+                size_hint_y: None
+                height: dp(55)
+                # on_release: app.root.current = 'slide'
+            Button:
+                text: 'Slalom'
+                size_hint_y: None
+                height: dp(55)
+                # on_release: app.root.current = 'slide'
+            # Adding empty widget to fill the rest of the available space.
+            Widget:
 
 <WizardWindow>:
     name: 'wizard'
+    canvas.before:
+        Color:
+            rgba: .28, .28, .28, 1
+        Rectangle:
+            size: self.size
+    # video_player: video_player
 
     BoxLayout:
+        id: wizard_menu
         orientation: 'vertical'
-
-        StackLayout:
-            id: wizard_menu
-            size_hint_y: None
-            size_y: dp(45)
-            Button:
-                text: 'Back'
-                size_hint_x: None
-                size_x: dp(45)
-                on_release: app.root.current = 'menu'
-            Button:
-                text: 'Fakie Gazelle'
-                size_hint_x: None
-                size_x: root.button_width
-                on_release: root.launchVideo(0, wizard_player, wizard_menu)
-            Button:
-                text: 'Front Gazelle'
-                size_hint_x: None
-                size_x: root.button_width
-                on_release: root.launchVideo(1, wizard_player, wizard_menu)
-            Button:
-                text: 'Lion in-out'
-                size_hint_x: None
-                size_x: root.button_width
-                on_release: root.launchVideo(2, wizard_player, wizard_menu)
-            Button:
-                text: 'Lion out-in'
-                size_hint_x: None
-                size_x: root.button_width
-                on_release: root.launchVideo(3, wizard_player, wizard_menu)
+        spacing: 25
+        padding: 10
 
         BoxLayout:
-            id: wizard_player_box
-            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(90)
             Button:
-                size_hint: None, None
-                size: dp(45), dp(45)
-                text: 'X'
-                opacity: .75
-                on_press: root.stopVideo(wizard_player, wizard_menu)
-            VideoPlayer:
-                id: wizard_player
-                source: root.video_path
+                background_color: (1, 1, 1, 1)
+                size_hint_x: .33333333333
+                size_hint_y: None
+                height: dp(55)
+                text: '<< Back'
+                # background_normal: 'resources/img/back_icon.png'
+                on_release: app.root.current = 'menu'
+            Label:
+                text: 'Wizard Tricks'
+                font_name: 'resources/fonts/Odachi.otf'
+                font_size: dp(45)
+                color: 0.6, 0.87, 0
 
-
+        StackLayout:
+            spacing: 5
+            Button:
+                text: 'Fakie Gazelle'
+                size_hint: (.5, None)
+                size_y: dp(45)
+                on_press: root.launchVideo(0)
+                on_release: app.root.current = 'player'
+            Button:
+                text: 'Front Gazelle'
+                size_hint: (.5, None)
+                size_y: dp(45)
+                on_press: root.launchVideo(1)
+                on_release: app.root.current = 'player'
+            Button:
+                text: 'Lion in-out'
+                size_hint: (.5, None)
+                size_y: dp(45)
+                on_press: root.launchVideo(2)
+                on_release: app.root.current = 'player'
+            Button:
+                text: 'Lion out-in'
+                size_hint: (.5, None)
+                size_y: dp(45)
+                on_press: root.launchVideo(3)
+                on_release: app.root.current = 'player'
 
 <SlideWindow>:
     name: 'slide'

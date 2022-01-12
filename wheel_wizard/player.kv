@@ -1,0 +1,26 @@
+<PlayerWidget>:
+    name: 'player'
+    ScrollView:
+        id: wizard_scroll
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 21
+            Button:
+                size_hint_y: None
+                height: dp(45)
+                text: '<< Back'
+                opacity: .75
+                on_press: video_player.state = 'stop'
+                on_release: app.root.current = 'wizard'
+
+            BoxLayout:
+                VideoPlayer:
+                    id: video_player
+                    allow_fullscreen: True
+                    allow_stretch: True
+                    size_hint: (None, None)
+                    size: (root.width, 275)
+                    source: app.video_path
+                    state: 'play'
+            Widget:
