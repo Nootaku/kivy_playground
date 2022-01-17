@@ -1,12 +1,28 @@
 #:import player player
 
 MainWindow:
+# MenuCard:
 
 <MainWindow>:
     MenuWindow:
     WizardWindow:
     SlideWindow:
     PlayerWidget:
+
+<TopBar>:
+    id: top_bar
+    size_hint_y: None
+    height: dp(90)
+
+    Image:
+        source: root.top_image
+        size_hint_x: root.top_image_width
+
+    Label:
+        text: root.parent.parent.title
+        font_name: 'resources/fonts/Odachi.otf'
+        font_size: dp(root.parent.parent.title_dp_size)
+        color: 0.6, 0.87, 0
 
 <MenuWindow>:
     name: 'menu'
@@ -20,44 +36,48 @@ MainWindow:
             Rectangle:
                 size: self.size
 
-        BoxLayout:
-            size_hint_y: None
-            height: dp(90)
-            Image:
-                source: 'resources/img/icon.png'
-                size_hint_x: .33333333333
-                # allow_stretch: True
-            Label:
-                text: 'Wheel Wizard'
-                font_name: 'resources/fonts/Odachi.otf'
-                font_size: dp(60)
-                color: 0.6, 0.87, 0
+        TopBar:
 
-        BoxLayout:
-            orientation: 'vertical'
+        MDGridLayout:
+            rows: 4
             spacing: 8
-            Button:
-                text: 'Wizard'
-                size_hint_y: None
-                height: dp(55)
-                on_release: app.root.current = 'wizard'
-            Button:
-                text: 'Slides'
-                size_hint_y: None
-                height: dp(55)
-                on_release: app.root.current = 'slide'
-            Button:
-                text: 'Street'
-                size_hint_y: None
-                height: dp(55)
-                # on_release: app.root.current = 'slide'
-            Button:
-                text: 'Slalom'
-                size_hint_y: None
-                height: dp(55)
-                # on_release: app.root.current = 'slide'
-            # Adding empty widget to fill the rest of the available space.
-            Widget:
+
+            MDCard:
+                MenuCard:
+                    FitImage:
+                        source: 'resources/img/wizard.png'
+                        allow_stretch: True
+                    CardButton:
+                        card_link: 'wizard'
+                    CardLabel:
+                        text: 'Wizard'
+
+            MDCard:
+                MenuCard:
+                    FitImage:
+                        source: 'resources/img/slide.png'
+                    CardButton:
+                        card_link: 'slide'
+                    CardLabel:
+                        text: 'Slide'
+
+            MDCard:
+                MenuCard:
+                    FitImage:
+                        source: 'resources/img/slalom.jpeg'
+                    CardButton:
+                        card_link: 'slalom'
+                    CardLabel:
+                        text: 'Slalom'
+
+            MDCard:
+                MenuCard:
+                    FitImage:
+                        source: 'resources/img/street.jpg'
+                    CardButton:
+                        card_link: 'street'
+                    CardLabel:
+                        text: 'Street'
 
 <WizardWindow>:
     name: 'wizard'
@@ -74,49 +94,26 @@ MainWindow:
         spacing: 25
         padding: 10
 
-        BoxLayout:
-            size_hint_y: None
-            height: dp(90)
-            Button:
-                background_color: (1, 1, 1, 1)
-                size_hint_x: .33333333333
-                size_hint_y: None
-                height: dp(55)
-                text: '<< Back'
-                # background_normal: 'resources/img/back_icon.png'
-                on_release: app.root.current = 'menu'
-            Label:
-                text: 'Wizard Tricks'
-                font_name: 'resources/fonts/Odachi.otf'
-                font_size: dp(45)
-                color: 0.6, 0.87, 0
+        TopBar:
+            top_image: 'resources/img/wizard.png'
 
-        StackLayout:
-            spacing: 5
-            Button:
-                text: 'Fakie Gazelle'
-                size_hint: (.5, None)
-                size_y: dp(45)
-                on_press: root.launchVideo(0)
-                on_release: app.root.current = 'player'
-            Button:
-                text: 'Front Gazelle'
-                size_hint: (.5, None)
-                size_y: dp(45)
-                on_press: root.launchVideo(1)
-                on_release: app.root.current = 'player'
-            Button:
-                text: 'Lion in-out'
-                size_hint: (.5, None)
-                size_y: dp(45)
-                on_press: root.launchVideo(2)
-                on_release: app.root.current = 'player'
-            Button:
-                text: 'Lion out-in'
-                size_hint: (.5, None)
-                size_y: dp(45)
-                on_press: root.launchVideo(3)
-                on_release: app.root.current = 'player'
+        VideoList:
+        # MDGridLayout:
+        #     cols: 2
+        #     spacing: 5
+        #
+        #     VideoButton:
+        #         text: 'Fakie Gazelle'
+        #         on_press: root.launchVideo(0)
+        #     VideoButton:
+        #         text: 'Front Gazelle'
+        #         on_press: root.launchVideo(1)
+        #     VideoButton:
+        #         text: 'Lion in-out'
+        #         on_press: root.launchVideo(2)
+        #     VideoButton:
+        #         text: 'Lion out-in'
+        #         on_press: root.launchVideo(3)
 
 <SlideWindow>:
     name: 'slide'
