@@ -11,14 +11,27 @@ MainWindow:
 
 <TopBar>:
     id: top_bar
-    size_hint_y: None
-    height: dp(90)
+
+    MDRectangleFlatIconButton:
+        id: top_bar_button
+        icon: 'arrow-left-bold'
+        text: 'Back'
+        theme_text_color: "Custom"
+        text_color: 1, 192 / 255, 34 / 255, 1
+        line_color: 1, 192 / 255, 34 / 255, 1
+        theme_icon_color: "Custom"
+        icon_color: 1, 192 / 255, 34 / 255, 1
+        pos_hint: {'center_y': .5}
+        # size_hint_x: root.top_image_width
+        on_release: app.root.current = 'menu'
 
     Image:
+        id: top_bar_logo
         source: root.top_image
         size_hint_x: root.top_image_width
 
     Label:
+        id: top_bar_label
         text: root.parent.parent.title
         font_name: 'resources/fonts/Odachi.otf'
         font_size: dp(root.parent.parent.title_dp_size)
@@ -95,7 +108,7 @@ MainWindow:
         padding: 10
 
         TopBar:
-            top_image: 'resources/img/wizard.png'
+            is_logo: False
 
         VideoList:
         # MDGridLayout:

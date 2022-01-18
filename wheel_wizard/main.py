@@ -18,9 +18,11 @@ from kivymd.uix.label import MDLabel
 
 # Properties
 from kivy.properties import (
+    Clock,
     NumericProperty,
     ObjectProperty,
-    StringProperty
+    StringProperty,
+    BooleanProperty
 )
 from kivy.core.window import Window
 from kivy import platform
@@ -40,6 +42,20 @@ class MenuWindow(MDScreen):
 class TopBar(MDBoxLayout):
     top_image = StringProperty('resources/img/icon.png')
     top_image_width = NumericProperty(.33333)
+    is_logo = BooleanProperty(True)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.size_hint_y = None
+        self.height = dp(90)
+
+        Clock.schedule_once(self.updateVisuals, 0)
+
+    def updateVisuals(self, dt):
+        if self.is_logo:
+            self.remove_widget(self.ids.top_bar_button)
+        else:
+            self.remove_widget(self.ids.top_bar_logo)
 
 
 class MenuCard(MDRelativeLayout):
@@ -184,8 +200,8 @@ class WheelWizardApp(MDApp):
         self.theme_cls.theme_style = "Dark"
 
         # Primary color palette (for buttons)
-        self.theme_cls.primary_palette = "Green"  # "Purple", "Red"
-        self.theme_cls.primary_hue = "200"
+        # self.theme_cls.primary_palette = "Green"  # "Purple", "Red"
+        # self.theme_cls.primary_hue = "200"
 
 
 if __name__ == '__main__':

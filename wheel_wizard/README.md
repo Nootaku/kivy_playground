@@ -4,6 +4,7 @@
 
 ```shell
 pip install kivy
+pip install kivymd
 pip install ffpyplayer
 pip install buildozer
 ```
