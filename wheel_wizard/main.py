@@ -29,6 +29,7 @@ from kivy import platform
 
 # Metrics
 from kivy.metrics import dp
+from video_list import VIDEO_LIST
 
 
 Builder.load_file("player.kv")
@@ -94,42 +95,21 @@ class CardLabel(MDLabel):
 class WizardWindow(MDScreen):
     title = 'Wizard Tricks'
     title_dp_size = 45
-    wizard_menu = ObjectProperty()
-    player_widget = ObjectProperty()
-    video_player = ObjectProperty()
-    video_path = StringProperty()
-    base_path = 'resources/videos/wizard/'
-    video_list = [
-        '01_fakie_gazelle.mp4',
-        '02_front_gazelle.mp4',
-        '03_lion_in_out.mp4',
-        '04_lion_out_in.mp4',
-    ]
 
-    is_menu_visible = True
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+class SlideWindow(MDScreen):
+    title = 'Slide Tricks'
+    title_dp_size = 45
 
-        if self.isDesktop:
-            Window.fullscreen = False
-            Window.size = (414, 896)
-        # self.updateSizes()
 
-    @property
-    def isDesktop(self):
-        if platform in ['linux', 'win', 'macosx']:
-            return True
-        return False
+class SlalomWindow(MDScreen):
+    title = 'Slalom Tricks'
+    title_dp_size = 45
 
-    def launchVideo(self, video_index):
-        app.video_path = self.base_path + self.video_list[video_index]
-        # self.video_player.state = 'play'
 
-    def stopVideo(self):
-        # self.video_player.state = 'stop'
-        self.is_menu_visible = True
-        self.updateVisibility()
+class StreetWindow(MDScreen):
+    title = 'Street Tricks'
+    title_dp_size = 45
 
 
 class VideoButton(Button):
@@ -146,54 +126,50 @@ class VideoButton(Button):
         app.root.current = 'player'
 
     def playVideo(self, instance):
-        self.parent.parent.parent.launchVideo(self.video_index)
+        self.parent.updateVideoPath(self.video_index)
 
 
 class VideoList(MDGridLayout):
-    video_list = [
-        'Fakie Gazelle',
-        'Front Gazelle',
-        'Lion In-Out',
-        'Lion Out-In',
-    ]
+    video_folder = StringProperty('wizard')
+    video_list = ObjectProperty(VIDEO_LIST)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 2
         self.spacing = 5
 
-        for i in range(len(self.video_list)):
+        Clock.schedule_once(self.updateVideoList, 0)
+
+    def updateVideoList(self, dt):
+        v_list = self.video_list[self.video_folder]
+
+        for i in range(len(v_list)):
             button = VideoButton()
             button.video_index = i
-            button.text = self.video_list[i]
+            button.text = v_list[i]['name']
             self.add_widget(button)
 
-
-class SlideWindow(MDScreen):
-    title = 'Slide Tricks'
-    title_dp_size = 45
-    video_path = StringProperty()
-    video_list = [
-        '01_fakie_gazelle.webm',
-        '02_front_gazelle.webm',
-        '03_lion_in_out.webm',
-        '04_lion_out_in.webm',
-    ]
+    def updateVideoPath(self, video_index):
+        v_list = self.video_list[self.video_folder]
+        app.video_path = '/'.join(
+            (
+                app.video_base_path,
+                self.video_folder,
+                v_list[video_index]['file']
+            )
+        )
 
 
 class MainWindow(ScreenManager):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        # Create Menu
-        self.createMenu()
-
-    def createMenu(self):
-        pass
+    pass
 
 
 class WheelWizardApp(MDApp):
     video_path = StringProperty()
+    video_base_path = StringProperty('resources/videos')
+    video_folder = StringProperty()
+
+    video_list = VIDEO_LIST
 
     def build(self):
         # Dark or Light theme

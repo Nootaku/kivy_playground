@@ -4,9 +4,16 @@ MainWindow:
 # MenuCard:
 
 <MainWindow>:
+    canvas.before:
+        Color:
+            rgba: .28, .28, .28, 1
+        Rectangle:
+            size: self.size
     MenuWindow:
     WizardWindow:
     SlideWindow:
+    SlalomWindow:
+    StreetWindow:
     PlayerWidget:
 
 <TopBar>:
@@ -39,15 +46,11 @@ MainWindow:
 
 <MenuWindow>:
     name: 'menu'
+
     BoxLayout:
         orientation: 'vertical'
         spacing: 25
         padding: 10
-        canvas.before:
-            Color:
-                rgba: .28, .28, .28, 1
-            Rectangle:
-                size: self.size
 
         TopBar:
 
@@ -94,13 +97,6 @@ MainWindow:
 
 <WizardWindow>:
     name: 'wizard'
-    canvas.before:
-        Color:
-            rgba: .28, .28, .28, 1
-        Rectangle:
-            size: self.size
-    # video_player: video_player
-
     BoxLayout:
         id: wizard_menu
         orientation: 'vertical'
@@ -109,43 +105,44 @@ MainWindow:
 
         TopBar:
             is_logo: False
-
         VideoList:
-        # MDGridLayout:
-        #     cols: 2
-        #     spacing: 5
-        #
-        #     VideoButton:
-        #         text: 'Fakie Gazelle'
-        #         on_press: root.launchVideo(0)
-        #     VideoButton:
-        #         text: 'Front Gazelle'
-        #         on_press: root.launchVideo(1)
-        #     VideoButton:
-        #         text: 'Lion in-out'
-        #         on_press: root.launchVideo(2)
-        #     VideoButton:
-        #         text: 'Lion out-in'
-        #         on_press: root.launchVideo(3)
+            video_folder: 'wizard'
 
 <SlideWindow>:
     name: 'slide'
-
     BoxLayout:
+        id: slide_menu
         orientation: 'vertical'
+        spacing: 25
+        padding: 10
 
-        BoxLayout:
-            size_hint_y: None
-            size_y: dp(45)
-            Button:
-                text: 'Back'
-                on_release: app.root.current = 'menu'
-            Button:
-                text: 'Powerslide'
-                on_release:
-            Button:
-                text: 'Parallel slide'
-                on_release:
+        TopBar:
+            is_logo: False
+        VideoList:
+            video_folder: 'slide'
 
-        VideoPlayer:
-            source: root.video_path
+<SlalomWindow>:
+    name: 'slalom'
+    BoxLayout:
+        id: slide_menu
+        orientation: 'vertical'
+        spacing: 25
+        padding: 10
+
+        TopBar:
+            is_logo: False
+        VideoList:
+            video_folder: 'slalom'
+
+<StreetWindow>:
+    name: 'street'
+    BoxLayout:
+        id: slide_menu
+        orientation: 'vertical'
+        spacing: 25
+        padding: 10
+
+        TopBar:
+            is_logo: False
+        VideoList:
+            video_folder: 'street'
