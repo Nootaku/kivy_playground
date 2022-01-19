@@ -1,27 +1,34 @@
 <PlayerWidget>:
     id: player_widget
     name: 'player'
-    ScrollView:
-        id: wizard_scroll
+
+    GridLayout:
+        cols: 1
+        # orientation: 'vertical'
+        spacing: 25
+        padding: 8
+        MDRectangleFlatIconButton:
+            id: top_bar_button
+            icon: 'arrow-left-bold'
+            text: 'Back'
+            theme_text_color: "Custom"
+            text_color: 1, 192 / 255, 34 / 255, 1
+            line_color: 1, 192 / 255, 34 / 255, 1
+            theme_icon_color: "Custom"
+            icon_color: 1, 192 / 255, 34 / 255, 1
+            adaptive_width: True
+            # pos_hint: {'center_y': .5}
+            # size_hint: 1, None
+            # height: dp(45)
+            on_press:
+                video_player.state = 'stop'
+                player_widget.getVideoFolder(video_player.source)
+            on_release: app.root.current = player_widget.return_to
 
         BoxLayout:
-            orientation: 'vertical'
-            spacing: 21
-            Button:
-                size_hint_y: None
-                height: dp(45)
-                text: '<< Back'
-                opacity: .75
-                on_press: video_player.state = 'stop'
-                on_release: app.root.current = 'wizard'
-
-            BoxLayout:
-                VideoPlayer:
-                    id: video_player
-                    allow_fullscreen: True
-                    allow_stretch: True
-                    size_hint: (None, None)
-                    size: (root.width, 275)
-                    source: app.video_path
-                    state: 'play'
-            Widget:
+            VideoPlayer:
+                id: video_player
+                allow_fullscreen: True
+                source: app.video_path
+                state: 'play'
+        Widget:

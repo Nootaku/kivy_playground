@@ -17,7 +17,7 @@ VIDEO_LIST = {
                     'file': '04_lion_out_in.mp4',
                 },
             ],
-            'slide': [
+            'slides': [
                 {
                     'name': 'Soul Slide',
                     'file': '02_soul_slide.mp4',
@@ -26,17 +26,17 @@ VIDEO_LIST = {
             'slalom': [
                 {
                     'name': 'Fish',
-                    'file': '02_soul_slide.mp4',
+                    'file': '00_test.mp4',
                 },
                 {
                     'name': 'Snake',
-                    'file': '02_soul_slide.mp4',
+                    'file': '00_test.mp4',
                 },
             ],
             'street': [
                 {
                     'name': 'T-Stop',
-                    'file': '02_soul_slide.mp4',
+                    'file': '00_test.mp4',
                 },
             ]
         }

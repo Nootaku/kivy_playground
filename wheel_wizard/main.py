@@ -141,6 +141,7 @@ class VideoList(MDGridLayout):
         Clock.schedule_once(self.updateVideoList, 0)
 
     def updateVideoList(self, dt):
+        app.video_folder = self.video_folder
         v_list = self.video_list[self.video_folder]
 
         for i in range(len(v_list)):
@@ -161,7 +162,17 @@ class VideoList(MDGridLayout):
 
 
 class MainWindow(ScreenManager):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if self.isDesktop:
+            Window.fullscreen = False
+            Window.size = (414, 896)
+
+    @property
+    def isDesktop(self):
+        if platform in ['linux', 'win', 'macosx']:
+            return True
+        return False
 
 
 class WheelWizardApp(MDApp):
