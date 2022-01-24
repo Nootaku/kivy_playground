@@ -194,4 +194,3 @@ class WheelWizardApp(MDApp):
 if __name__ == '__main__':
     app = WheelWizardApp()
     app.run()
-    app.run()

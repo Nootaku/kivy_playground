@@ -19,7 +19,15 @@ VIDEO_LIST = {
             ],
             'slides': [
                 {
+                    'name': 'Powerslide',
+                    'file': '02_soul_slide.mp4',
+                },
+                {
                     'name': 'Soul Slide',
+                    'file': '02_soul_slide.mp4',
+                },
+                {
+                    'name': 'Acid Slide',
                     'file': '02_soul_slide.mp4',
                 },
             ],
@@ -32,10 +40,59 @@ VIDEO_LIST = {
                     'name': 'Snake',
                     'file': '00_test.mp4',
                 },
+                {
+                    'name': 'Cross',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Double Cross',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Heel-Toe Snake',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Toe-Toe Snake',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Heel-Heel Snake',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Eagle',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Chap Chap',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Crazy',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Nelson',
+                    'file': '00_test.mp4',
+                },
+
             ],
             'street': [
                 {
                     'name': 'T-Stop',
+                    'file': '01_t_stop.mp4',
+                },
+                {
+                    'name': 'Compas Stop',
+                    'file': '02_compas_stop.mp4',
+                },
+                {
+                    'name': 'Powerstop',
+                    'file': '00_test.mp4',
+                },
+                {
+                    'name': 'Jump',
                     'file': '00_test.mp4',
                 },
             ]

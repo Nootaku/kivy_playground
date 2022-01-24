@@ -1,6 +1,5 @@
 from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import Clock, StringProperty
+from kivy.properties import StringProperty
 
 
 class PlayerWidget(Screen):

@@ -6,7 +6,7 @@
         cols: 1
         # orientation: 'vertical'
         spacing: 25
-        padding: 8
+        padding: 21
         MDRectangleFlatIconButton:
             id: top_bar_button
             icon: 'arrow-left-bold'
@@ -17,9 +17,7 @@
             theme_icon_color: "Custom"
             icon_color: 1, 192 / 255, 34 / 255, 1
             adaptive_width: True
-            # pos_hint: {'center_y': .5}
-            # size_hint: 1, None
-            # height: dp(45)
+
             on_press:
                 video_player.state = 'stop'
                 player_widget.getVideoFolder(video_player.source)

@@ -27,7 +27,7 @@ source.include_exts = py,png,jpg,kv,atlas,otf,mp4
 ```
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,ffpyplayer,ffmpeg
+requirements = python3,kivy,ffpyplayer,ffmpeg,kivymd
 ```
 
 **_Step 2: Run buildozer_**
@@ -37,3 +37,7 @@ cd wheel_wizard
 buildozer init
 buildozer android debug run
 ```
+
+## Problems to be tackled
+
+Add videos to the list without putting them on GitHub
